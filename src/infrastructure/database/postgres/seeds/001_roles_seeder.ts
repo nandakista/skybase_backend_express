@@ -1,9 +1,14 @@
 import type { Knex } from "knex";
 
 export async function seed(knex: Knex): Promise<void> {
-  await knex("roles").del();
+  // await knex("roles").del();
 
-  await knex.raw("ALTER SEQUENCE roles_id_seq RESTART WITH 1");
+  // await knex.raw("ALTER SEQUENCE roles_id_seq RESTART WITH 1");
+
+  await knex.raw(`
+  TRUNCATE TABLE roles
+  RESTART IDENTITY CASCADE
+`);
 
   await knex("roles").insert([
     {
