@@ -1,22 +1,23 @@
 import { Router } from "express";
 import { authorize } from "../../../../infrastructure/http/middlewares/auth.middleware";
 import { userController, usersController } from "../../container";
-import { permission, Role } from "../../../../infrastructure/http/middlewares/permission.middleware";
+import { permission } from "../../../../infrastructure/http/middlewares/rbac.middleware";
+import { Permission } from "../../../../shared/constants/permissions";
 
 const router = Router();
 
 router.get(
   "/",
   authorize,
-  permission(Role.SUPER_ADMIN),
+  permission(Permission.USERS_READ),
   usersController.users
 );
 
 router.get(
   "/:id",
   authorize,
-  permission(Role.SUPER_ADMIN),
-  userController.user,
+  permission(Permission.USERS_READ),
+  userController.user
 );
 
 export default router;
