@@ -1,6 +1,7 @@
 import type { UserDataSource } from "../datasources/user.datasource";
 import type { UserRepository } from "../../domain/repositories/user.repository";
 import { User } from "../../domain/entities/user";
+import { Role } from "../../domain/entities/role";
 import { UserMapper } from "../mappers/user.mapper";
 
 export class UserRepositoryImpl implements UserRepository {
@@ -28,5 +29,9 @@ export class UserRepositoryImpl implements UserRepository {
 
   getUserById(id: number): Promise<User | null> {
     return this.datasource.getUserById(id);
+  }
+
+  async getAllRoles(): Promise<Role[]> {
+    return this.datasource.getAllRoles();
   }
 }

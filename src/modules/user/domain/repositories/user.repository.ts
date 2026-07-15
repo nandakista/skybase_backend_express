@@ -1,4 +1,5 @@
-import { User } from "../../../user/domain/entities/user";
+import { Role } from "../entities/role";
+import { User } from "../entities/user";
 
 export interface UserRepository {
     getAllUsers(
@@ -8,4 +9,6 @@ export interface UserRepository {
     ): Promise<{data: User[], total: number}>;
 
     getUserById(id: number): Promise<User | null>;
+
+    getAllRoles(): Promise<Role[]>;
 }

@@ -350,6 +350,87 @@ Gunakan dengan hati-hati karena seluruh data Podman akan dihapus.
 
 ---
 
+# 21. Menjalankan Project dengan npm run dev
+
+Sebelum menjalankan aplikasi, pastikan dependency sudah terinstall:
+
+```bash
+npm install
+```
+
+Jalankan aplikasi backend dalam mode development:
+
+```bash
+npm run dev
+```
+
+Aplikasi akan berjalan di port default yang diset oleh project, biasanya:
+
+```bash
+http://localhost:3000
+```
+
+Jika port berbeda, cek file konfigurasi server atau env yang dipakai project.
+
+---
+
+# 22. Menjalankan Database dan Redis dengan Docker Compose
+
+Project ini sudah dilengkapi dengan file `docker-compose.yml` untuk menjalankan PostgreSQL dan Redis.
+
+## Jalankan Compose
+
+```bash
+docker compose up -d
+```
+
+Jika menggunakan Podman:
+
+```bash
+podman compose up -d
+```
+
+## Cek container yang berjalan
+
+```bash
+docker compose ps
+```
+
+atau
+
+```bash
+podman compose ps
+```
+
+## Stop Compose
+
+```bash
+docker compose down
+```
+
+atau
+
+```bash
+podman compose down
+```
+
+## Catatan
+
+Pastikan file `.env` sudah berisi konfigurasi database dan JWT secret, misalnya:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
+JWT_SECRET=your-secret
+```
+
+Jika Redis password dipakai, pastikan nilai `REDIS_PASSWORD` juga ada di `.env`.
+
+---
+
 # Ringkasan Perintah
 
 | Perintah                       | Fungsi                               |

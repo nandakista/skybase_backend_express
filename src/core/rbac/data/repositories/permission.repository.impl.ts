@@ -30,6 +30,10 @@ export class PermissionRepositoryImpl implements PermissionRepository {
     return permissions;
   }
 
+  async findPermissionMatrixByRoleId(roleId: number): Promise<Array<{ module: string; action: string; name: string }>> {
+    return this.permissionDataSource.findPermissionMatrixByRoleId(roleId);
+  }
+
   async deletePermissions(roleId: number): Promise<void> {
     await this.cacheDataSource.deletePermissions(roleId);
   }
