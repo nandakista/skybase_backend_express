@@ -8,6 +8,10 @@ export class PermissionService {
     return permissions.includes(permission);
   }
 
+  async getPermissionsByRoleId(roleId: number): Promise<string[]> {
+    return this.permissionRepository.findPermissionsByRoleId(roleId);
+  }
+
   async invalidateRolePermissions(roleId: number): Promise<void> {
     await this.permissionRepository.deletePermissions(roleId);
   }
