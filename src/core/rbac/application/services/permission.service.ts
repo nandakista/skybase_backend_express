@@ -8,10 +8,6 @@ export class PermissionService {
     return permissions.includes(permission);
   }
 
-  async getPermissionMatrix(roleId: number): Promise<Array<{ module: string; action: string; name: string }>> {
-    return this.permissionRepository.findPermissionMatrixByRoleId(roleId);
-  }
-
   async invalidateRolePermissions(roleId: number): Promise<void> {
     await this.permissionRepository.deletePermissions(roleId);
   }
