@@ -1,4 +1,3 @@
-import { Role } from "../../domain/entities/role";
 import { User } from "../../domain/entities/user";
 
 export interface UserDataSource {
@@ -9,6 +8,4 @@ export interface UserDataSource {
     ): Promise<{ data: User[], total: number }>;
 
     getUserById(id: number): Promise<User | null>;
-
-    getAllRoles(): Promise<Role[]>;
 }

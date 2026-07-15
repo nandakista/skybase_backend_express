@@ -62,6 +62,7 @@ export class UserDataSourceImpl implements UserDataSource {
                 "roles.deleted_at as role__deleted_at"
             )
             .where("users.id", id)
+            .andWhere("users.deleted_at", null)
             .first();
 
         if (!user) {
@@ -69,19 +70,5 @@ export class UserDataSourceImpl implements UserDataSource {
         }
 
         return UserMapper.toEntity(user);
-    }
-
-    async getAllRoles(): Promise<Role[]> {
-        const rows = await db("roles")
-            .select("id", "name", "created_at", "updated_at", "deleted_at")
-            .whereNull("deleted_at");
-
-        return rows.map((row) => ({
-            id: Number(row.id),
-            name: row.name,
-            createdAt: row.created_at,
-            updatedAt: row.updated_at,
-            deletedAt: row.deleted_at,
-        }));
     }
 }

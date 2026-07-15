@@ -10,5 +10,4 @@ const permissionRepository = new PermissionRepositoryImpl(
   permissionDataSource
 );
 
-
 export const permissionService = new PermissionService(permissionRepository);

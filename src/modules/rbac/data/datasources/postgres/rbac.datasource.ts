@@ -1,5 +1,8 @@
+import { Role } from "../../../domain/entities/role";
+
 export interface RbacDataSource {
-  getAllRoles(): Promise<Array<{ id: number; name: string }>>;
+  getAllRoles(): Promise<Role[]>;
+
   getRolePermissions(roleId: number): Promise<{
     role: {
       id: number;

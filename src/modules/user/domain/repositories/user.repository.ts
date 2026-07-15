@@ -1,4 +1,3 @@
-import { Role } from "../entities/role";
 import { User } from "../entities/user";
 
 export interface UserRepository {
@@ -9,6 +8,4 @@ export interface UserRepository {
     ): Promise<{data: User[], total: number}>;
 
     getUserById(id: number): Promise<User | null>;
-
-    getAllRoles(): Promise<Role[]>;
 }
