@@ -59,7 +59,7 @@ Keterangan:
 # Install Dependency
 
 ```bash
-npm install
+pnpm install
 ```
 
 ---
@@ -69,7 +69,7 @@ npm install
 ## Membuat Migration Baru
 
 ```bash
-npm run make:migration -- create_products_table
+pnpm run make:migration -- create_products_table
 ```
 
 Contoh hasil:
@@ -89,7 +89,7 @@ src/database/migrations
 ## Menjalankan Migration
 
 ```bash
-npm run migrate
+pnpm run migrate
 ```
 
 ---
@@ -97,7 +97,7 @@ npm run migrate
 ## Rollback Migration Terakhir
 
 ```bash
-npm run rollback
+pnpm run rollback
 ```
 
 ---
@@ -117,13 +117,13 @@ Contoh:
 ## Membuat Seeder Baru
 
 ```bash
-npm run make:seed -- 001_roles
+pnpm run make:seed -- 001_roles
 ```
 
 atau
 
 ```bash
-npm run make:seed -- 002_users
+pnpm run make:seed -- 002_users
 ```
 
 Seeder akan dibuat pada
@@ -137,7 +137,7 @@ src/database/seeds
 ## Menjalankan Seeder
 
 ```bash
-npm run seed
+pnpm run seed
 ```
 
 ---
