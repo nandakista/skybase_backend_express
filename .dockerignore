@@ -1,0 +1,16 @@
+node_modules
+dist
+coverage
+.bun
+.idea
+.vscode
+.DS_Store
+*.log
+*.lockb
+
+.env
+.env.*
+!.env.example
+
+docker-compose.override.yml
+tmp

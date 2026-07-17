@@ -32,17 +32,32 @@ export class RbacDataSourceImpl implements RbacDataSource {
 
     const rows = await db("role_permissions")
       .join("permissions", "role_permissions.permission_id", "permissions.id")
+      .join("modules", "permissions.module_id", "modules.id")
+      .join("platforms", "modules.platform_id", "platforms.id")
       .where("role_permissions.role_id", roleId)
-      .select("permissions.module", "permissions.action");
+      .select(
+        "platforms.code as platform",
+        "modules.name as module",
+        "permissions.action"
+      )
+      .orderBy("platforms.code")
+      .orderBy("modules.name");
 
-    const permissionsByModule = new Map<string, Record<string, boolean>>();
+    const platformsMap = new Map<string, Map<string, Record<string, boolean>>>();
 
     for (const row of rows) {
+      const platformName = row.platform;
       const moduleName = row.module;
       const actionName = row.action;
 
-      if (!permissionsByModule.has(moduleName)) {
-        permissionsByModule.set(moduleName, {
+      if (!platformsMap.has(platformName)) {
+        platformsMap.set(platformName, new Map());
+      }
+
+      const moduleMap = platformsMap.get(platformName)!;
+
+      if (!moduleMap.has(moduleName)) {
+        moduleMap.set(moduleName, {
           create: false,
           read: false,
           update: false,
@@ -50,7 +65,7 @@ export class RbacDataSourceImpl implements RbacDataSource {
         });
       }
 
-      const actions = permissionsByModule.get(moduleName)!;
+      const actions = moduleMap.get(moduleName)!;
       actions[actionName] = true;
     }
 
@@ -59,9 +74,12 @@ export class RbacDataSourceImpl implements RbacDataSource {
         id: Number(role.id),
         name: role.name,
       },
-      permissions: Array.from(permissionsByModule.entries()).map(([module, actions]) => ({
-        module,
-        actions,
+      platforms: Array.from(platformsMap.entries()).map(([platform, modulesMap]) => ({
+        platform,
+        permissions: Array.from(modulesMap.entries()).map(([module, actions]) => ({
+          module,
+          actions,
+        })),
       })),
     };
   }

@@ -8,9 +8,12 @@ export interface RbacRepository {
             id: number;
             name: string;
         };
-        permissions: Array<{
-            module: string;
-            actions: Record<string, boolean>;
+        platforms: Array<{
+            platform: string;
+            permissions: Array<{
+                module: string;
+                actions: Record<string, boolean>;
+            }>;
         }>;
     }>;
 }
