@@ -1,10 +1,19 @@
 import { createClient } from "redis";
 import { env } from "../../../config/env";
 
-const client = createClient({
-  url: env.REDIS_URL ?? `redis://${env.REDIS_HOST}:${env.REDIS_PORT}`,
-  password: env.REDIS_PASSWORD,
-});
+export const client = createClient(
+  env.redis.url
+    ? {
+        url: env.redis.url,
+      }
+    : {
+        socket: {
+          host: env.redis.host,
+          port: env.redis.port,
+        },
+        password: env.redis.password,
+      }
+);
 
 client.on("error", (error) => {
   console.error("Redis Client Error", error);

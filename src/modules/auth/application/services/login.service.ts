@@ -33,8 +33,8 @@ export class LoginService {
         email: user.email,
         roleId: user.roleId,
       },
-      env.JWT_SECRET,
-      { expiresIn: "1d" }
+      env.security.jwtSecret,
+      { expiresIn: env.security.jwtExpiresIn }
     );
 
     return LoginResponseDto.from(token, user);
