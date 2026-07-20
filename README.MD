@@ -5,7 +5,7 @@
 Pastikan telah menginstal:
 
 * Node.js (disarankan versi 22 LTS)
-* npm
+* pnpm
 * Visual Studio Code
 * Podman Desktop atau Podman CLI
 * Git (opsional)
@@ -38,7 +38,7 @@ code .
 Jalankan:
 
 ```bash
-npm init -y
+pnpm init -y
 ```
 
 Perintah tersebut akan membuat file:
@@ -56,13 +56,13 @@ Contoh untuk Express + TypeScript.
 ### Dependency utama
 
 ```bash
-npm install express
+pnpm add express
 ```
 
 ### Dependency development
 
 ```bash
-npm install -D typescript @types/node @types/express ts-node nodemon
+pnpm add -D typescript @types/node @types/express ts-node nodemon
 ```
 
 ---
@@ -70,7 +70,7 @@ npm install -D typescript @types/node @types/express ts-node nodemon
 # 4. Inisialisasi TypeScript
 
 ```bash
-npx tsc --init
+pnpm dlx tsc --init
 ```
 
 Sesuaikan `tsconfig.json` sesuai kebutuhan project.
@@ -102,14 +102,14 @@ project/
 Development
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Production
 
 ```bash
-npm run build
-npm start
+pnpm run build
+pnpm start
 ```
 
 ---
@@ -131,11 +131,13 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+# Enable Corepack and prepare pnpm, then install
+RUN corepack enable && corepack prepare pnpm@latest --activate \
+  && pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 EXPOSE 3001
 
@@ -350,13 +352,94 @@ Gunakan dengan hati-hati karena seluruh data Podman akan dihapus.
 
 ---
 
+# 21. Menjalankan Project dengan pnpm run dev
+
+Sebelum menjalankan aplikasi, pastikan dependency sudah terinstall:
+
+```bash
+pnpm install
+```
+
+Jalankan aplikasi backend dalam mode development:
+
+```bash
+pnpm run dev
+```
+
+Aplikasi akan berjalan di port default yang diset oleh project, biasanya:
+
+```bash
+http://localhost:3000
+```
+
+Jika port berbeda, cek file konfigurasi server atau env yang dipakai project.
+
+---
+
+# 22. Menjalankan Database dan Redis dengan Docker Compose
+
+Project ini sudah dilengkapi dengan file `docker-compose.yml` untuk menjalankan PostgreSQL dan Redis.
+
+## Jalankan Compose
+
+```bash
+docker compose up -d
+```
+
+Jika menggunakan Podman:
+
+```bash
+podman compose up -d
+```
+
+## Cek container yang berjalan
+
+```bash
+docker compose ps
+```
+
+atau
+
+```bash
+podman compose ps
+```
+
+## Stop Compose
+
+```bash
+docker compose down
+```
+
+atau
+
+```bash
+podman compose down
+```
+
+## Catatan
+
+Pastikan file `.env` sudah berisi konfigurasi database dan JWT secret, misalnya:
+
+```env
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASSWORD=postgres
+JWT_SECRET=your-secret
+```
+
+Jika Redis password dipakai, pastikan nilai `REDIS_PASSWORD` juga ada di `.env`.
+
+---
+
 # Ringkasan Perintah
 
 | Perintah                       | Fungsi                               |
 | ------------------------------ | ------------------------------------ |
-| `npm init -y`                  | Membuat project Node.js              |
-| `npm install`                  | Menginstal dependency                |
-| `npm run build`                | Build TypeScript                     |
+| `pnpm init -y`                 | Membuat project Node.js              |
+| `pnpm install`                 | Menginstal dependency                |
+| `pnpm run build`               | Build TypeScript                     |
 | `podman build -t nama-image .` | Build image                          |
 | `podman images`                | Melihat image                        |
 | `podman run ...`               | Menjalankan container                |

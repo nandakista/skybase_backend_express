@@ -2,6 +2,7 @@ import { db } from "../../../../config/database";
 import { UserMapper } from "../mappers/user.mapper";
 import { paginate } from "../../../../infrastructure/database/postgres/queries/pagination-helper.query";
 
+import { Role } from "../../domain/entities/role";
 import { User } from "../../domain/entities/user";
 import type { UserDataSource } from "./user.datasource";
 
@@ -61,6 +62,7 @@ export class UserDataSourceImpl implements UserDataSource {
                 "roles.deleted_at as role__deleted_at"
             )
             .where("users.id", id)
+            .andWhere("users.deleted_at", null)
             .first();
 
         if (!user) {

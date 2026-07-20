@@ -41,8 +41,8 @@ function writeFileIfMissing(filePath, content) {
 const moduleArg = process.argv[2];
 
 if (!moduleArg) {
-  console.error("Usage: npm run generate:module -- <module-name>");
-  console.error("Example: npm run generate:module -- user-profile");
+  console.error("Usage: pnpm run generate:module -- <module-name>");
+  console.error("Example: pnpm run generate:module -- user-profile");
   process.exit(1);
 }
 

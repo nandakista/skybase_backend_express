@@ -31,7 +31,7 @@ export function authorize(
 
     const payload = jwt.verify(
       token,
-      env.JWT_SECRET
+      env.security.jwtSecret
     ) as JwtPayload;
 
     req.user = {
