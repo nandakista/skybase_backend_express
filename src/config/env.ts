@@ -35,6 +35,16 @@ const configSchema = z.object({
     url: z.string().optional(),
   }),
 
+  snowflake: z.object({
+    account: z.string(),
+    username: z.string(),
+    warehouse: z.string(),
+    database: z.string(),
+    schema: z.string(),
+    role: z.string(),
+    privateKeyPath: z.string(),
+  }),
+
   security: z.object({
     cacheEncryptionKey: z
       .string()
@@ -75,6 +85,16 @@ function loadConfig(): Config {
       cacheEncryptionKey: process.env.CACHE_ENCRYPTION_KEY,
       jwtSecret: process.env.JWT_SECRET,
       jwtExpiresIn: process.env.JWT_EXPIRES_IN,
+    },
+
+     snowflake: {
+      account: process.env.SNOWFLAKE_ACCOUNT,
+      username: process.env.SNOWFLAKE_USERNAME,
+      warehouse: process.env.SNOWFLAKE_WAREHOUSE,
+      database: process.env.SNOWFLAKE_DATABASE,
+      schema: process.env.SNOWFLAKE_SCHEMA,
+      role: process.env.SNOWFLAKE_ROLE,
+      privateKeyPath: process.env.SNOWFLAKE_PRIVATE_KEY_PATH,
     },
   };
 
