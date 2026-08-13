@@ -1,19 +1,11 @@
 import { Router } from "express";
-
-import authRoutes from "../modules/auth/presentation/routes/login.routes";
-import profileRoutes from "../modules/profile/presentation/routes/profile.routes";
-import rbacRoutes from "../modules/rbac/presentation/routes/rbac.routes";
-import userRoutes from "../modules/user/presentation/routes/user.routes";
+import v1Router from "./v1";
 
 const router = Router();
 
-router.get("/", (_, res) => {
-    res.send("Basecode Express");
-});
+router.use("/api/v1", v1Router);
 
-router.use("/auth", authRoutes);
-router.use("/profile", profileRoutes);
-router.use("/roles", rbacRoutes);
-router.use("/users", userRoutes);
+/// Add your v2 routes here when you have them
+// router.use("/api/v2", v2Router);
 
 export default router;
