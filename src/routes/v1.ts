@@ -11,6 +11,15 @@ router.get("/", (_, res) => {
     res.send("Basecode Express API V1");
 });
 
+router.get("/health-checker", (_, res) => {
+    res.status(200).json({
+        status: "ok",
+        service: "backend-skybase",
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+    });
+});
+
 router.use("/auth", authRoutes);
 router.use("/profile", profileRoutes);
 router.use("/roles", rbacRoutes);
