@@ -27,21 +27,23 @@ export class RbacDataSourceImpl implements RbacDataSource {
       return {
         role: { id: roleId, name: "" },
         permissions: [],
+        platforms: [],
       };
     }
 
-    const rows = await db("role_permissions")
-      .join("permissions", "role_permissions.permission_id", "permissions.id")
-      .join("modules", "permissions.module_id", "modules.id")
-      .join("platforms", "modules.platform_id", "platforms.id")
-      .where("role_permissions.role_id", roleId)
+    const rows = await db("role_permissions as rp")
+      .join("permissions as p", "rp.permission_id", "p.id")
+      .join("platform_modules as pm", "p.platform_module_id", "pm.id")
+      .join("modules as m", "pm.module_id", "m.id")
+      .join("platforms as pl", "pm.platform_id", "pl.id")
+      .where("rp.role_id", roleId)
       .select(
-        "platforms.code as platform",
-        "modules.name as module",
-        "permissions.action"
+        "pl.code as platform",
+        "m.name as module",
+        "p.action"
       )
-      .orderBy("platforms.code")
-      .orderBy("modules.name");
+      .orderBy("pl.code")
+      .orderBy("m.name");
 
     const platformsMap = new Map<string, Map<string, Record<string, boolean>>>();
 

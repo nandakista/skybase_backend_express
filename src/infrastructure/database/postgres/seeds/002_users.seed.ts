@@ -13,7 +13,7 @@ export async function seed(knex: Knex): Promise<void> {
     // Admin
     {
       name: "Super Administrator",
-      email: "super.dmin@example.com",
+      email: "super.admin@example.com",
       password,
       role_id: 1,
       is_active: true,

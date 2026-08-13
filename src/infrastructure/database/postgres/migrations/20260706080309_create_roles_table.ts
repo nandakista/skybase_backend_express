@@ -4,7 +4,9 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("roles", (table) => {
     table.bigIncrements("id").primary();
 
-    table.string("name", 50).notNullable().unique();
+    table.string("code", 50).notNullable().unique();
+
+    table.string("name", 150).notNullable().unique();
 
     table.timestamps(true, true);
 

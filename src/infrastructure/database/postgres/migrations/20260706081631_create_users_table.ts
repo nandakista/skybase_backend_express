@@ -4,6 +4,15 @@ export async function up(knex: Knex): Promise<void> {
   await knex.schema.createTable("users", (table) => {
     table.bigIncrements("id").primary();
 
+    table
+    .bigInteger("role_id")
+    .unsigned()
+    .notNullable()
+    .references("id")
+    .inTable("roles")
+    .onUpdate("CASCADE")
+    .onDelete("RESTRICT");
+
     table.string("name", 150).notNullable();
 
     table.string("email", 150).notNullable().unique();

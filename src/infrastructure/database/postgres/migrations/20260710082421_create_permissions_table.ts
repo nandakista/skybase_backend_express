@@ -4,9 +4,9 @@ export async function up(knex: Knex): Promise<void> {
     await knex.schema.createTable("permissions", (table) => {
         table.bigIncrements("id").primary();
 
-        table.bigInteger("module_id").unsigned().notNullable().first();
-        table.foreign("module_id")
-            .references("modules.id")
+        table.bigInteger("platform_module_id").unsigned().notNullable().first();
+        table.foreign("platform_module_id")
+            .references("platform_modules.id")
             .onUpdate("CASCADE")
             .onDelete("CASCADE");
 
@@ -18,7 +18,7 @@ export async function up(knex: Knex): Promise<void> {
 
         table.timestamp("deleted_at").nullable();
 
-        table.unique(["module_id", "action"]);
+        table.unique(["platform_module_id", "action"]);
     });
 }
 

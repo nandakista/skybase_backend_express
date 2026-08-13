@@ -22,14 +22,6 @@ export async function seed(knex: Knex): Promise<void> {
       created_at: new Date(),
       updated_at: new Date(),
       deleted_at: null,
-    },
-    {
-      id: 3,
-      code: "public",
-      name: "Public API",
-      created_at: new Date(),
-      updated_at: new Date(),
-      deleted_at: null,
-    },
+    }
   ]);
 }

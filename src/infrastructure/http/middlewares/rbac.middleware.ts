@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from "express";
 
 import { ForbiddenError, UnauthorizedError } from "../../../shared/errors/app.error";
 import { permissionService } from "../../../core/rbac/container";
+import { env } from "../../../config/env";
 
-export function permission(permissionName: string) {
+export function validate(permissionName: string) {
   return async (
     req: Request,
     _res: Response,
@@ -24,11 +25,11 @@ export function permission(permissionName: string) {
     );
 
     if (!hasPermission) {
+      const message = env.app.env === "production"
+        ? "You don't have permission to access this resource."
+        : `You don't have permission to access this resource. You need permission '${permissionName}'`;
       return next(
-        new ForbiddenError(
-          "FORBIDDEN",
-          `You don't have permission to access this resource. You need permission '${permissionName}'`
-        )
+        new ForbiddenError("FORBIDDEN", message)
       );
     }
 
